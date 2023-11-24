@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <link rel="stylesheet" type="text/css" href="../../static/chat/chatRoom.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="menu">
+        <div class="back">
+            <button><a href="{% url 'chat-page' %}">Back</a></button>
+        </div>
+        <div class="logout">
+            <button><a href="{% url 'logout' %}">Logout</a></button>
+        </div>
+    </div>
+        
+    <div class="chat-room">
+        <div class="chat-header">
+            <h2>{{room_name}}</h2>
+        </div>
+        <div class="chat-messages" id="display">
+            <script>
+                $(document).ready(function(){
+                    setInterval(function(){
+                        $.ajax({
+                            type:'GET',
+                            url:'/getMessages/{{room_name}}/',
+                            success:function(response){
+                                $("#display").empty();
+                                for (var key in response.messages)
+                                {
+                                    var temp = "<div class='message'><span class='user'>" + response.messages[key].user + "</span><p>" + response.messages[key].value + "</p><span class='time-left'>" + response.messages[key].date + "</span></div>"
+                                    $(display).append(temp);
+                                }
+                            },
+                            error: function(response) {
+                                alert("An error occured")
+                            }
+                        });
+                    }, 1000);
+                });
+            </script>
+            <!-- Add more messages as needed -->
+        </div>
+        <form class="chat-input" id="post-form">
+            {% csrf_token %}
+            <input type="hidden" id="username" name="username" value="{{username}}">
+            <input type="hidden" id="room_id" name="room_id" value="{{room_details.id}}">
+            <input type="text" id="messageInput" placeholder="Type your message" name="message">
+            <button class="send-button" type="submit"> Send </button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    $(document).on('submit', '#post-form', function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/send',
+            data:{
+                username:$('#username').val(),
+                room_id:$('#room_id').val(),
+                message:$('#messageInput').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+                // alert(data);
+            }
+        });
+        document.getElementById("messageInput").value = "";
+    });
+</script>
+</html>

@@ -1,0 +1,76 @@
+* {
+    font-family: "Poppins";
+}
+
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dde5f4;
+    height: 100vh;
+}
+
+.screen-1 {
+    background: #f1f7fe;
+    padding: 3em; /* Increased padding for a larger block */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 30px;
+    box-shadow: 0 0 2em #e6e9f9;
+    gap: 2em;
+    width: 40%; /* Increased width for a larger block */
+    min-height: 60%;
+}
+
+/* ... (existing CSS styles) */
+
+.screen-1 .footer {
+    display: flex;
+    font-size: 0.7em;
+    color: #5e5e5e;
+    gap: 14em;
+    padding-bottom: 10em;
+}
+
+.screen-1 .footer span {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* Custom styles for the group chat form */
+.group-chat-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.group-chat-form label {
+    color: #3e4684;
+    font-weight: 600;
+}
+
+.group-chat-form input {
+    padding: 0.8em; /* Increased padding for a larger input field */
+    border: none; /* Changed border color to a lighter color */
+    border-radius: 5px;
+    outline: none;
+}
+
+.enter-room-button {
+    padding: 1.5em; /* Increased padding for a larger button */
+    background: #3e4684;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+}
